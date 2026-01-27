@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   BRANCHES,
@@ -73,6 +74,8 @@ const StatCard = ({ stat }) => (
 );
 
 const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-brand-black text-white">
       <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
@@ -91,13 +94,52 @@ const App = () => {
               </a>
             ))}
           </div>
-          <a
-            href={CONTACT.whatsapp}
-            className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
-          >
-            Join Now
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href={CONTACT.whatsapp}
+              className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
+            >
+              Join Now
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white md:hidden"
+            >
+              <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
+            </button>
+          </div>
         </nav>
+        {isMenuOpen ? (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="border-t border-white/10 bg-black/90 md:hidden"
+          >
+            <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 text-sm">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white/70 transition hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href={CONTACT.whatsapp}
+                onClick={() => setIsMenuOpen(false)}
+                className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white"
+              >
+                <span>Chat on WhatsApp</span>
+                <span className="text-brand-red">→</span>
+              </a>
+            </div>
+          </motion.div>
+        ) : null}
       </header>
 
       <main>
