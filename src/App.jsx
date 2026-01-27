@@ -97,8 +97,8 @@ const App = () => {
   return (
     <div className="bg-brand-black text-white">
       <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
+        <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 sm:flex-nowrap">
+          <div className="flex min-w-0 items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-lg font-bold">A</span>
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-white/60">Adiyash</p>
@@ -115,7 +115,7 @@ const App = () => {
           <div className="flex items-center gap-3">
             <a
               href={CONTACT.whatsapp}
-              className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
+              className="rounded-full bg-brand-red px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark sm:px-5"
             >
               Join Now
             </a>
@@ -190,18 +190,18 @@ const App = () => {
               <div className="flex flex-wrap gap-4">
                 <a
                   href="#pricing"
-                  className="rounded-full bg-brand-red px-6 py-3 text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark"
+                  className="w-full rounded-full bg-brand-red px-6 py-3 text-center text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark sm:w-auto"
                 >
                   View Memberships
                 </a>
                 <a
                   href="#programs"
-                  className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white"
+                  className="w-full rounded-full border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white sm:w-auto"
                 >
                   Explore Programs
                 </a>
               </div>
-              <div className="flex items-center gap-6 text-sm text-white/70">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
                 <div>
                   <p className="text-2xl font-semibold text-white">6+</p>
                   <p>Branches across Mumbai</p>
@@ -217,7 +217,7 @@ const App = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="glass max-w-md rounded-3xl p-8"
+              className="glass w-full max-w-md rounded-3xl p-8"
             >
               <h3 className="font-display text-2xl font-semibold">Start your transformation</h3>
               <p className="mt-3 text-sm text-white/70">
