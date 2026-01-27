@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   BRANCHES,
@@ -49,6 +50,11 @@ const schedule = [
 ];
 
 const ratings = Array.from({ length: 5 });
+const progressMetrics = [
+  { label: 'Strength gain', value: 86, note: 'Avg. after 12 weeks' },
+  { label: 'Stamina boost', value: 78, note: 'HIIT attendance' },
+  { label: 'Mobility score', value: 72, note: 'Recovery program' },
+];
 
 const SectionHeading = ({ eyebrow, title, description }) => (
   <div className="max-w-2xl space-y-3">
@@ -72,7 +78,22 @@ const StatCard = ({ stat }) => (
   </motion.div>
 );
 
+const ProgressBar = ({ metric }) => (
+  <div className="space-y-2">
+    <div className="flex items-center justify-between text-sm text-white/70">
+      <span className="font-semibold text-white">{metric.label}</span>
+      <span>{metric.value}%</span>
+    </div>
+    <div className="progress-track">
+      <span className="progress-fill" style={{ width: `${metric.value}%` }} />
+    </div>
+    <p className="text-xs text-white/50">{metric.note}</p>
+  </div>
+);
+
 const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="bg-brand-black text-white">
       <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
@@ -91,13 +112,52 @@ const App = () => {
               </a>
             ))}
           </div>
-          <a
-            href={CONTACT.whatsapp}
-            className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
-          >
-            Join Now
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href={CONTACT.whatsapp}
+              className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
+            >
+              Join Now
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white md:hidden"
+            >
+              <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
+            </button>
+          </div>
         </nav>
+        {isMenuOpen ? (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="border-t border-white/10 bg-black/90 md:hidden"
+          >
+            <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 text-sm">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white/70 transition hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href={CONTACT.whatsapp}
+                onClick={() => setIsMenuOpen(false)}
+                className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white"
+              >
+                <span>Chat on WhatsApp</span>
+                <span className="text-brand-red">→</span>
+              </a>
+            </div>
+          </motion.div>
+        ) : null}
       </header>
 
       <main>
@@ -188,6 +248,57 @@ const App = () => {
             {STATS.map((stat) => (
               <StatCard key={stat.title} stat={stat} />
             ))}
+          </div>
+        </section>
+
+        <section className="bg-black/50 py-16">
+          <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="space-y-6"
+            >
+              <SectionHeading
+                eyebrow="Progress tracking"
+                title="See your gains, week after week"
+                description="Inspired by top gym landing pages, we highlight clear progress metrics and member milestones to keep motivation high."
+              />
+              <div className="space-y-5">
+                {progressMetrics.map((metric) => (
+                  <ProgressBar key={metric.label} metric={metric} />
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3 text-sm text-white/70">
+                {['Body composition scans', 'Trainer feedback loops', 'Monthly goals reset'].map((item) => (
+                  <span key={item} className="rounded-full border border-white/10 px-4 py-2">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative overflow-hidden rounded-3xl border border-white/10"
+            >
+              <img
+                src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Trainer tracking progress"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60">Progress snapshots</p>
+                <h3 className="text-2xl font-semibold">Weekly check-ins with certified coaches</h3>
+                <p className="text-sm text-white/70">
+                  Body metrics, lifting PRs, and recovery scores all updated inside your member dashboard.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </section>
 

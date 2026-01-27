@@ -24,6 +24,14 @@ body {
   @apply bg-white/5 border border-white/10 backdrop-blur-lg;
 }
 
+.progress-track {
+  @apply h-2 w-full rounded-full bg-white/10;
+}
+
+.progress-fill {
+  @apply block h-full rounded-full bg-gradient-to-r from-brand-red to-rose-200 shadow-glow;
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 9999px;
