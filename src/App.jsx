@@ -50,6 +50,11 @@ const schedule = [
 ];
 
 const ratings = Array.from({ length: 5 });
+const progressMetrics = [
+  { label: 'Strength gain', value: 86, note: 'Avg. after 12 weeks' },
+  { label: 'Stamina boost', value: 78, note: 'HIIT attendance' },
+  { label: 'Mobility score', value: 72, note: 'Recovery program' },
+];
 
 const SectionHeading = ({ eyebrow, title, description }) => (
   <div className="max-w-2xl space-y-3">
@@ -71,6 +76,19 @@ const StatCard = ({ stat }) => (
     </div>
     <p className="mt-3 text-sm text-white/70">{stat.description}</p>
   </motion.div>
+);
+
+const ProgressBar = ({ metric }) => (
+  <div className="space-y-2">
+    <div className="flex items-center justify-between text-sm text-white/70">
+      <span className="font-semibold text-white">{metric.label}</span>
+      <span>{metric.value}%</span>
+    </div>
+    <div className="progress-track">
+      <span className="progress-fill" style={{ width: `${metric.value}%` }} />
+    </div>
+    <p className="text-xs text-white/50">{metric.note}</p>
+  </div>
 );
 
 const App = () => {
@@ -230,6 +248,57 @@ const App = () => {
             {STATS.map((stat) => (
               <StatCard key={stat.title} stat={stat} />
             ))}
+          </div>
+        </section>
+
+        <section className="bg-black/50 py-16">
+          <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="space-y-6"
+            >
+              <SectionHeading
+                eyebrow="Progress tracking"
+                title="See your gains, week after week"
+                description="Inspired by top gym landing pages, we highlight clear progress metrics and member milestones to keep motivation high."
+              />
+              <div className="space-y-5">
+                {progressMetrics.map((metric) => (
+                  <ProgressBar key={metric.label} metric={metric} />
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3 text-sm text-white/70">
+                {['Body composition scans', 'Trainer feedback loops', 'Monthly goals reset'].map((item) => (
+                  <span key={item} className="rounded-full border border-white/10 px-4 py-2">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative overflow-hidden rounded-3xl border border-white/10"
+            >
+              <img
+                src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Trainer tracking progress"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60">Progress snapshots</p>
+                <h3 className="text-2xl font-semibold">Weekly check-ins with certified coaches</h3>
+                <p className="text-sm text-white/70">
+                  Body metrics, lifting PRs, and recovery scores all updated inside your member dashboard.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </section>
 
