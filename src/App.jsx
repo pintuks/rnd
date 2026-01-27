@@ -109,6 +109,8 @@ const App = () => {
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-black/30" />
+            <div className="hero-orb hero-orb-left" aria-hidden="true" />
+            <div className="hero-orb hero-orb-right" aria-hidden="true" />
           </div>
           <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 py-20 md:flex-row md:items-center md:py-28">
             <motion.div
@@ -186,6 +188,75 @@ const App = () => {
             {STATS.map((stat) => (
               <StatCard key={stat.title} stat={stat} />
             ))}
+          </div>
+        </section>
+
+        <section id="experience" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Experience"
+            title="Immerse yourself in the Adiyash energy"
+            description="A cinematic preview of our premium training floors, recovery lounges, and high-intensity zones."
+          />
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-black/40"
+            >
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              >
+                <source
+                  src="https://videos.pexels.com/video-files/4162659/4162659-hd_1920_1080_25fps.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/20 to-transparent" />
+              <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/70">
+                Live tour
+                <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-brand-red" />
+              </div>
+              <div className="absolute bottom-6 left-6 space-y-2">
+                <p className="text-sm uppercase tracking-[0.3em] text-white/60">60-second reel</p>
+                <h3 className="font-display text-2xl font-semibold">Feel the momentum</h3>
+              </div>
+            </motion.div>
+            <div className="grid gap-4">
+              {[
+                {
+                  title: 'Immersive lighting',
+                  description: 'Dynamic LEDs sync to your workout intensity for high-energy focus.',
+                },
+                {
+                  title: 'Recovery lounge',
+                  description: 'Contrast therapy, stretch bays, and hydration bars for total reset.',
+                },
+                {
+                  title: 'Signature coaching',
+                  description: 'Guided sessions with performance analytics and custom milestones.',
+                },
+              ].map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="glass rounded-2xl p-5"
+                >
+                  <h4 className="text-lg font-semibold">{item.title}</h4>
+                  <p className="mt-2 text-sm text-white/70">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
