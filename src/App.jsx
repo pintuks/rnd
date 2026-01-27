@@ -1,0 +1,568 @@
+import { motion } from 'framer-motion';
+import {
+  BRANCHES,
+  CONTACT,
+  CONTACT_INFO,
+  FAQ_DATA,
+  GALLERY_IMAGES,
+  NAV_LINKS,
+  PRICING,
+  PROGRAMS,
+  STATS,
+  TESTIMONIALS,
+  TRAINERS,
+} from './data';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0 },
+};
+
+const iconMap = {
+  Target: '🎯',
+  Flame: '🔥',
+  TrendingUp: '📈',
+  Trophy: '🏆',
+  Zap: '⚡',
+  Dumbbell: '🏋️',
+  Swords: '🥊',
+  Heart: '❤️',
+  Users: '🤝',
+};
+
+const schedule = [
+  {
+    day: 'Monday',
+    focus: 'Strength + Conditioning',
+    slots: ['6:00 AM CrossFit', '7:30 AM Weight Training', '6:30 PM HIIT Boxing'],
+  },
+  {
+    day: 'Wednesday',
+    focus: 'Power + Core',
+    slots: ['6:30 AM Cardio Blast', '5:30 PM Personal Training', '7:00 PM Mobility Flow'],
+  },
+  {
+    day: 'Friday',
+    focus: 'Endurance + Recovery',
+    slots: ['6:00 AM Kick Boxing', '5:00 PM CrossFit', '7:30 PM Stretch & Recover'],
+  },
+];
+
+const ratings = Array.from({ length: 5 });
+
+const SectionHeading = ({ eyebrow, title, description }) => (
+  <div className="max-w-2xl space-y-3">
+    <p className="section-subtitle">{eyebrow}</p>
+    <h2 className="section-title">{title}</h2>
+    {description ? <p className="text-white/70">{description}</p> : null}
+  </div>
+);
+
+const StatCard = ({ stat }) => (
+  <motion.div
+    variants={fadeUp}
+    className="glass rounded-2xl p-6 shadow-glow"
+    whileHover={{ translateY: -6 }}
+  >
+    <div className="flex items-center gap-3 text-brand-red">
+      <span className="text-2xl">{iconMap[stat.icon] ?? '💪'}</span>
+      <h3 className="text-lg font-semibold">{stat.title}</h3>
+    </div>
+    <p className="mt-3 text-sm text-white/70">{stat.description}</p>
+  </motion.div>
+);
+
+const App = () => {
+  return (
+    <div className="bg-brand-black text-white">
+      <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-lg font-bold">A</span>
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Adiyash</p>
+              <p className="font-display text-lg font-semibold">Gym & Wellness</p>
+            </div>
+          </div>
+          <div className="hidden items-center gap-6 text-sm text-white/70 md:flex">
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="transition hover:text-white">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <a
+            href={CONTACT.whatsapp}
+            className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark"
+          >
+            Join Now
+          </a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="home" className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt="Gym hero"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-black/30" />
+          </div>
+          <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 py-20 md:flex-row md:items-center md:py-28">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-xl space-y-6"
+            >
+              <p className="section-subtitle">Mumbai&apos;s Boldest Gym Experience</p>
+              <h1 className="font-display text-4xl font-semibold leading-tight md:text-6xl">
+                Build Strength. <span className="text-brand-red">Own Your Story.</span>
+              </h1>
+              <p className="text-white/70">
+                Adiyash Gym blends high-performance training, premium equipment, and expert coaching to help you transform your body
+                and mindset.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="#pricing"
+                  className="rounded-full bg-brand-red px-6 py-3 text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark"
+                >
+                  View Memberships
+                </a>
+                <a
+                  href="#programs"
+                  className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white"
+                >
+                  Explore Programs
+                </a>
+              </div>
+              <div className="flex items-center gap-6 text-sm text-white/70">
+                <div>
+                  <p className="text-2xl font-semibold text-white">6+</p>
+                  <p>Branches across Mumbai</p>
+                </div>
+                <div className="h-10 w-px bg-white/20" />
+                <div>
+                  <p className="text-2xl font-semibold text-white">1500+</p>
+                  <p>Active members</p>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="glass max-w-md rounded-3xl p-8"
+            >
+              <h3 className="font-display text-2xl font-semibold">Start your transformation</h3>
+              <p className="mt-3 text-sm text-white/70">
+                Book a free orientation session with our trainers and get a custom roadmap in minutes.
+              </p>
+              <div className="mt-6 space-y-4 text-sm">
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+                  <span className="text-white/70">Call us</span>
+                  <span className="font-semibold">{CONTACT_INFO.phone}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+                  <span className="text-white/70">Email</span>
+                  <span className="font-semibold">{CONTACT_INFO.email}</span>
+                </div>
+              </div>
+              <a
+                href={CONTACT.whatsapp}
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:scale-[1.02]"
+              >
+                WhatsApp Us
+              </a>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-6 md:grid-cols-4">
+            {STATS.map((stat) => (
+              <StatCard key={stat.title} stat={stat} />
+            ))}
+          </div>
+        </section>
+
+        <section id="programs" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Programs"
+            title="Training built for every fitness goal"
+            description="Choose from high-energy group classes, personal training, and performance coaching designed to push you forward."
+          />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {PROGRAMS.map((program, index) => (
+              <motion.article
+                key={program.id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.05 }}
+                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+              >
+                <div className="relative h-48">
+                  <img src={program.image} alt={program.title} className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+                  <span className="absolute left-4 top-4 rounded-full bg-brand-red/90 px-3 py-1 text-xs font-semibold">
+                    {program.title}
+                  </span>
+                </div>
+                <div className="space-y-3 p-6">
+                  <div className="flex items-center gap-3 text-brand-red">
+                    <span className="text-2xl">{iconMap[program.icon] ?? '💥'}</span>
+                    <h3 className="text-xl font-semibold">{program.title}</h3>
+                  </div>
+                  <p className="text-sm text-white/70">{program.description}</p>
+                  <button className="text-sm font-semibold text-brand-red transition group-hover:text-white">
+                    Learn more →
+                  </button>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <section id="schedule" className="bg-black/50 py-16">
+          <div className="mx-auto max-w-6xl space-y-10 px-6">
+            <SectionHeading
+              eyebrow="Schedule"
+              title="Weekly rhythm for relentless progress"
+              description="Stay consistent with our curated class schedule, blending strength, conditioning, and recovery sessions."
+            />
+            <div className="grid gap-6 md:grid-cols-3">
+              {schedule.map((day) => (
+                <motion.div
+                  key={day.day}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="glass rounded-3xl p-6"
+                >
+                  <p className="text-sm uppercase tracking-[0.2em] text-brand-red">{day.day}</p>
+                  <h3 className="mt-3 text-xl font-semibold">{day.focus}</h3>
+                  <ul className="mt-4 space-y-3 text-sm text-white/70">
+                    {day.slots.map((slot) => (
+                      <li key={slot} className="flex items-center justify-between">
+                        <span>{slot}</span>
+                        <span className="text-brand-red">●</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="gallery" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Gallery"
+            title="A look inside our training zones"
+            description="Premium equipment, functional spaces, and inspiring energy in every corner."
+          />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {GALLERY_IMAGES.map((image, index) => (
+              <motion.div
+                key={image.id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.04 }}
+                className="overflow-hidden rounded-2xl border border-white/10"
+              >
+                <img src={image.src} alt={image.alt} className="h-48 w-full object-cover transition duration-500 hover:scale-105" />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section id="trainers" className="bg-black/50 py-16">
+          <div className="mx-auto max-w-6xl space-y-10 px-6">
+            <SectionHeading
+              eyebrow="Trainers"
+              title="Coach-led guidance at every step"
+              description="Certified experts dedicated to your technique, recovery, and mindset."
+            />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {TRAINERS.map((trainer, index) => (
+                <motion.article
+                  key={trainer.id}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                >
+                  <div className="relative h-56">
+                    <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  </div>
+                  <div className="space-y-2 p-5">
+                    <h3 className="text-lg font-semibold">{trainer.name}</h3>
+                    <p className="text-sm text-brand-red">{trainer.specialty}</p>
+                    <p className="text-sm text-white/60">{trainer.experience} experience</p>
+                    <button className="text-sm font-semibold text-white/70 transition group-hover:text-white">
+                      Book session →
+                    </button>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Testimonials"
+            title="Members who chose strength"
+            description="Real success stories from our community of athletes, parents, and busy professionals."
+          />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {TESTIMONIALS.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.05 }}
+                className="glass rounded-3xl p-6"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="h-12 w-12 rounded-full border border-white/20 object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold">{testimonial.name}</p>
+                    <p className="text-xs text-white/60">{testimonial.duration}</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-brand-red">
+                  {ratings.map((_, starIndex) => (
+                    <span key={`${testimonial.id}-${starIndex}`}>★</span>
+                  ))}
+                </div>
+                <p className="mt-4 text-sm text-white/70">{testimonial.review}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section id="pricing" className="bg-black/50 py-16">
+          <div className="mx-auto max-w-6xl space-y-10 px-6">
+            <SectionHeading
+              eyebrow="Pricing"
+              title="Memberships crafted for your ambition"
+              description="Flexible plans with premium amenities, personal coaching, and exclusive perks."
+            />
+            <div className="grid gap-6 md:grid-cols-3">
+              {PRICING.map((plan, index) => (
+                <motion.article
+                  key={plan.id}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.05 }}
+                  className={`relative rounded-3xl border p-6 ${
+                    plan.popular
+                      ? 'border-brand-red bg-white/10 shadow-glow'
+                      : 'border-white/10 bg-white/5'
+                  }`}
+                >
+                  {plan.popular ? (
+                    <span className="absolute -top-3 right-6 rounded-full bg-brand-red px-3 py-1 text-xs font-semibold">
+                      Most Popular
+                    </span>
+                  ) : null}
+                  {plan.badge ? (
+                    <span className="absolute -top-3 left-6 rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
+                      {plan.badge}
+                    </span>
+                  ) : null}
+                  <h3 className="text-xl font-semibold">{plan.tier}</h3>
+                  <div className="mt-4 flex items-end gap-2">
+                    <span className="text-3xl font-semibold">₹{plan.price}</span>
+                    <span className="text-sm text-white/60">{plan.period}</span>
+                  </div>
+                  <ul className="mt-6 space-y-3 text-sm text-white/70">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2">
+                        <span className="text-brand-red">●</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark">
+                    Start {plan.tier}
+                  </button>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Locations"
+            title="Find the branch closest to you"
+            description="Train at any Adiyash Gym location with seamless access and friendly staff."
+          />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {BRANCHES.map((branch, index) => (
+              <motion.div
+                key={branch.id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.04 }}
+                className="glass rounded-2xl p-6"
+              >
+                <h3 className="text-lg font-semibold">{branch.name}</h3>
+                <p className="mt-2 text-sm text-white/70">{branch.area}</p>
+                <p className="mt-4 text-sm font-semibold text-brand-red">{branch.phone}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-black/50 py-16">
+          <div className="mx-auto max-w-6xl space-y-10 px-6">
+            <SectionHeading
+              eyebrow="FAQ"
+              title="Everything you need to know"
+              description="Answers to common questions about memberships, amenities, and support."
+            />
+            <div className="grid gap-6 md:grid-cols-2">
+              {FAQ_DATA.map((faq, index) => (
+                <motion.details
+                  key={faq.id}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.03 }}
+                  className="glass rounded-2xl p-6"
+                >
+                  <summary className="cursor-pointer text-sm font-semibold">{faq.question}</summary>
+                  <p className="mt-3 text-sm text-white/70">{faq.answer}</p>
+                </motion.details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+          <SectionHeading
+            eyebrow="Contact"
+            title="Ready to start? Let&apos;s talk"
+            description="Reach out to our team and reserve your first session today."
+          />
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="glass rounded-3xl p-8"
+            >
+              <h3 className="text-xl font-semibold">Send us a message</h3>
+              <form className="mt-6 grid gap-4 text-sm">
+                <input
+                  type="text"
+                  placeholder="Full name"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                />
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                />
+                <input
+                  type="text"
+                  placeholder="Preferred branch"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                />
+                <textarea
+                  rows="4"
+                  placeholder="Tell us about your goals"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                />
+                <button className="rounded-full bg-brand-red px-6 py-3 font-semibold shadow-glow transition hover:bg-brand-red-dark">
+                  Request Callback
+                </button>
+              </form>
+            </motion.div>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="space-y-6"
+            >
+              <div className="glass rounded-3xl p-6">
+                <h4 className="text-lg font-semibold">Contact details</h4>
+                <div className="mt-4 space-y-3 text-sm text-white/70">
+                  <p>Phone: {CONTACT_INFO.phone}</p>
+                  <p>Email: {CONTACT_INFO.email}</p>
+                  <p>Address: {CONTACT_INFO.address}</p>
+                  <p>Hours: {CONTACT_INFO.hours}</p>
+                </div>
+              </div>
+              <div className="glass rounded-3xl p-6">
+                <h4 className="text-lg font-semibold">Quick actions</h4>
+                <div className="mt-4 space-y-3 text-sm">
+                  <a
+                    href={CONTACT.whatsapp}
+                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red"
+                  >
+                    <span>Chat on WhatsApp</span>
+                    <span className="text-brand-red">→</span>
+                  </a>
+                  <a
+                    href={`mailto:${CONTACT.email}`}
+                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red"
+                  >
+                    <span>Email us</span>
+                    <span className="text-brand-red">→</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="font-display text-lg font-semibold text-white">Adiyash Gym</p>
+            <p className="mt-2">High-performance training with a bold mindset.</p>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="transition hover:text-white">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <p>© 2025 Adiyash Gym. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
