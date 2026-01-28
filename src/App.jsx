@@ -67,7 +67,7 @@ const SectionHeading = ({ eyebrow, title, description }) => (
 const StatCard = ({ stat }) => (
   <motion.div
     variants={fadeUp}
-    className="glass rounded-2xl p-6 shadow-glow"
+    className="card-elevated p-6"
     whileHover={{ translateY: -6 }}
   >
     <div className="flex items-center gap-3 text-brand-red">
@@ -191,7 +191,7 @@ const App = () => {
               transition={{ duration: 0.8 }}
               className="max-w-xl space-y-6"
             >
-              <p className="section-subtitle">Mumbai&apos;s Boldest Gym Experience</p>
+              <span className="chip">Mumbai&apos;s Boldest Gym Experience</span>
               <h1 className="font-display text-4xl font-semibold leading-tight md:text-6xl">
                 Build Strength. <span className="text-brand-red">Own Your Story.</span>
               </h1>
@@ -213,12 +213,11 @@ const App = () => {
                   Explore Programs
                 </a>
               </div>
-              <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
+              <div className="card-elevated grid gap-4 p-5 text-sm text-white/70 sm:grid-cols-2">
                 <div>
                   <p className="text-2xl font-semibold text-white">6+</p>
                   <p>Branches across Mumbai</p>
                 </div>
-                <div className="h-10 w-px bg-white/20" />
                 <div>
                   <p className="text-2xl font-semibold text-white">1500+</p>
                   <p>Active members</p>
@@ -229,18 +228,18 @@ const App = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="glass w-full max-w-md rounded-3xl p-8"
+              className="card-elevated w-full max-w-md p-8"
             >
               <h3 className="font-display text-2xl font-semibold">Start your transformation</h3>
               <p className="mt-3 text-sm text-white/70">
                 Book a free orientation session with our trainers and get a custom roadmap in minutes.
               </p>
               <div className="mt-6 space-y-4 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-4 py-3">
                   <span className="text-white/70">Call us</span>
                   <span className="font-semibold">{CONTACT_INFO.phone}</span>
                 </div>
-                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-4 py-3">
                   <span className="text-white/70">Email</span>
                   <span className="font-semibold">{CONTACT_INFO.email}</span>
                 </div>
@@ -254,6 +253,7 @@ const App = () => {
             </motion.div>
           </div>
         </section>
+        <div className="gradient-divider" aria-hidden="true" />
 
         <section className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-6 md:grid-cols-4">
@@ -376,7 +376,7 @@ const App = () => {
                   whileInView="show"
                   viewport={{ once: true, amount: 0.4 }}
                   transition={{ delay: index * 0.05 }}
-                  className="glass rounded-2xl p-5"
+                  className="glass-strong rounded-2xl p-5"
                 >
                   <h4 className="text-lg font-semibold">{item.title}</h4>
                   <p className="mt-2 text-sm text-white/70">{item.description}</p>
@@ -401,7 +401,7 @@ const App = () => {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.05 }}
-                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/60 hover:shadow-[0_20px_50px_rgba(239,68,68,0.15)]"
               >
                 <div className="relative h-48">
                   <img
@@ -446,7 +446,7 @@ const App = () => {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="glass rounded-3xl p-6"
+                  className="glass-strong rounded-3xl p-6"
                 >
                   <p className="text-sm uppercase tracking-[0.2em] text-brand-red">{day.day}</p>
                   <h3 className="mt-3 text-xl font-semibold">{day.focus}</h3>
@@ -479,7 +479,7 @@ const App = () => {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.04 }}
-                className="overflow-hidden rounded-2xl border border-white/10"
+                className="overflow-hidden rounded-2xl border border-white/10 transition hover:-translate-y-1 hover:border-brand-red/50"
               >
                 <img
                   src={image.src}
@@ -509,7 +509,7 @@ const App = () => {
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.05 }}
-                  className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                  className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/50"
                 >
                   <div className="relative h-56">
                     <img
@@ -550,7 +550,7 @@ const App = () => {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.05 }}
-                className="glass rounded-3xl p-6"
+                className="glass-strong rounded-3xl p-6"
               >
                 <div className="flex items-center gap-4">
                   <img
@@ -597,7 +597,7 @@ const App = () => {
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`relative rounded-3xl border p-6 ${
+                  className={`relative rounded-3xl border p-6 transition hover:-translate-y-1 ${
                     plan.popular
                       ? 'border-brand-red bg-white/10 shadow-glow'
                       : 'border-white/10 bg-white/5'
@@ -650,7 +650,7 @@ const App = () => {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.04 }}
-                className="glass rounded-2xl p-6"
+                className="glass-strong rounded-2xl p-6"
               >
                 <h3 className="text-lg font-semibold">{branch.name}</h3>
                 <p className="mt-2 text-sm text-white/70">{branch.area}</p>
@@ -676,7 +676,7 @@ const App = () => {
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.03 }}
-                  className="glass rounded-2xl p-6"
+                  className="glass-strong rounded-2xl p-6"
                 >
                   <summary className="cursor-pointer text-sm font-semibold">{faq.question}</summary>
                   <p className="mt-3 text-sm text-white/70">{faq.answer}</p>
@@ -698,7 +698,7 @@ const App = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="glass rounded-3xl p-8"
+              className="glass-strong rounded-3xl p-8"
             >
               <h3 className="text-xl font-semibold">Send us a message</h3>
               <form className="mt-6 grid gap-4 text-sm">
@@ -759,7 +759,7 @@ const App = () => {
               viewport={{ once: true, amount: 0.2 }}
               className="space-y-6"
             >
-              <div className="glass rounded-3xl p-6">
+              <div className="glass-strong rounded-3xl p-6">
                 <h4 className="text-lg font-semibold">Contact details</h4>
                 <div className="mt-4 space-y-3 text-sm text-white/70">
                   <p>Phone: {CONTACT_INFO.phone}</p>
@@ -768,7 +768,7 @@ const App = () => {
                   <p>Hours: {CONTACT_INFO.hours}</p>
                 </div>
               </div>
-              <div className="glass rounded-3xl p-6">
+              <div className="glass-strong rounded-3xl p-6">
                 <h4 className="text-lg font-semibold">Quick actions</h4>
                 <div className="mt-4 space-y-3 text-sm">
                   <a
