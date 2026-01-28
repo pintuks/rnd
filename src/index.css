@@ -43,6 +43,37 @@ body {
   @apply bg-white/5 border border-white/10 backdrop-blur-lg;
 }
 
+.glass-strong {
+  @apply bg-white/10 border border-white/15 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.45)];
+}
+
+.card-elevated {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.card-elevated::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.chip {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70;
+}
+
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(239, 68, 68, 0.6), rgba(255, 255, 255, 0));
+}
+
 .progress-track {
   @apply h-2 w-full rounded-full bg-white/10;
 }
