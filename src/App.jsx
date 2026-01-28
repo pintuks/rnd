@@ -96,6 +96,9 @@ const App = () => {
 
   return (
     <div className="bg-brand-black text-white">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
         <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 sm:flex-nowrap">
           <div className="flex min-w-0 items-center gap-3">
@@ -107,7 +110,11 @@ const App = () => {
           </div>
           <div className="hidden items-center gap-6 text-sm text-white/70 md:flex">
             {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="transition hover:text-white">
+              <a
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
                 {link.label}
               </a>
             ))}
@@ -115,7 +122,7 @@ const App = () => {
           <div className="flex items-center gap-3">
             <a
               href={CONTACT.whatsapp}
-              className="rounded-full bg-brand-red px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark sm:px-5"
+              className="rounded-full bg-brand-red px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-5"
             >
               Join Now
             </a>
@@ -123,7 +130,9 @@ const App = () => {
               type="button"
               onClick={() => setIsMenuOpen((prev) => !prev)}
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white md:hidden"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black md:hidden"
             >
               <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
             </button>
@@ -135,6 +144,7 @@ const App = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
             className="border-t border-white/10 bg-black/90 md:hidden"
+            id="mobile-menu"
           >
             <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 text-sm">
               {NAV_LINKS.map((link) => (
@@ -142,7 +152,7 @@ const App = () => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-white/70 transition hover:text-white"
+                  className="text-white/70 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   {link.label}
                 </a>
@@ -150,7 +160,7 @@ const App = () => {
               <a
                 href={CONTACT.whatsapp}
                 onClick={() => setIsMenuOpen(false)}
-                className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white"
+                className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <span>Chat on WhatsApp</span>
                 <span className="text-brand-red">→</span>
@@ -160,13 +170,15 @@ const App = () => {
         ) : null}
       </header>
 
-      <main>
+      <main id="main-content">
         <section id="home" className="relative overflow-hidden">
           <div className="absolute inset-0">
             <img
               src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1600"
               alt="Gym hero"
               className="h-full w-full object-cover"
+              fetchPriority="high"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-black/30" />
             <div className="hero-orb hero-orb-left" aria-hidden="true" />
@@ -190,13 +202,13 @@ const App = () => {
               <div className="flex flex-wrap gap-4">
                 <a
                   href="#pricing"
-                  className="w-full rounded-full bg-brand-red px-6 py-3 text-center text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark sm:w-auto"
+                  className="w-full rounded-full bg-brand-red px-6 py-3 text-center text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:w-auto"
                 >
                   View Memberships
                 </a>
                 <a
                   href="#programs"
-                  className="w-full rounded-full border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white sm:w-auto"
+                  className="w-full rounded-full border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:w-auto"
                 >
                   Explore Programs
                 </a>
@@ -235,7 +247,7 @@ const App = () => {
               </div>
               <a
                 href={CONTACT.whatsapp}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:scale-[1.02]"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 WhatsApp Us
               </a>
@@ -289,6 +301,8 @@ const App = () => {
                 src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt="Trainer tracking progress"
                 className="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 space-y-2">
@@ -322,6 +336,7 @@ const App = () => {
                 loop
                 muted
                 playsInline
+                preload="none"
                 poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600"
               >
                 <source
@@ -389,7 +404,13 @@ const App = () => {
                 className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
               >
                 <div className="relative h-48">
-                  <img src={program.image} alt={program.title} className="h-full w-full object-cover" />
+                  <img
+                    src={program.image}
+                    alt={program.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
                   <span className="absolute left-4 top-4 rounded-full bg-brand-red/90 px-3 py-1 text-xs font-semibold">
                     {program.title}
@@ -401,7 +422,7 @@ const App = () => {
                     <h3 className="text-xl font-semibold">{program.title}</h3>
                   </div>
                   <p className="text-sm text-white/70">{program.description}</p>
-                  <button className="text-sm font-semibold text-brand-red transition group-hover:text-white">
+                  <button className="text-sm font-semibold text-brand-red transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                     Learn more →
                   </button>
                 </div>
@@ -460,7 +481,13 @@ const App = () => {
                 transition={{ delay: index * 0.04 }}
                 className="overflow-hidden rounded-2xl border border-white/10"
               >
-                <img src={image.src} alt={image.alt} className="h-48 w-full object-cover transition duration-500 hover:scale-105" />
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="h-48 w-full object-cover transition duration-500 hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
               </motion.div>
             ))}
           </div>
@@ -485,14 +512,20 @@ const App = () => {
                   className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5"
                 >
                   <div className="relative h-56">
-                    <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
+                    <img
+                      src={trainer.image}
+                      alt={trainer.name}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   </div>
                   <div className="space-y-2 p-5">
                     <h3 className="text-lg font-semibold">{trainer.name}</h3>
                     <p className="text-sm text-brand-red">{trainer.specialty}</p>
                     <p className="text-sm text-white/60">{trainer.experience} experience</p>
-                    <button className="text-sm font-semibold text-white/70 transition group-hover:text-white">
+                    <button className="text-sm font-semibold text-white/70 transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                       Book session →
                     </button>
                   </div>
@@ -524,15 +557,22 @@ const App = () => {
                     src={testimonial.image}
                     alt={testimonial.name}
                     className="h-12 w-12 rounded-full border border-white/20 object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
                     <p className="text-xs text-white/60">{testimonial.duration}</p>
                   </div>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-brand-red">
+                <div
+                  className="mt-4 flex items-center gap-1 text-brand-red"
+                  aria-label={`${testimonial.rating} out of 5 stars`}
+                >
                   {ratings.map((_, starIndex) => (
-                    <span key={`${testimonial.id}-${starIndex}`}>★</span>
+                    <span key={`${testimonial.id}-${starIndex}`} aria-hidden="true">
+                      {starIndex < testimonial.rating ? '★' : '☆'}
+                    </span>
                   ))}
                 </div>
                 <p className="mt-4 text-sm text-white/70">{testimonial.review}</p>
@@ -586,7 +626,7 @@ const App = () => {
                       </li>
                     ))}
                   </ul>
-                  <button className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark">
+                  <button className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                     Start {plan.tier}
                   </button>
                 </motion.article>
@@ -662,27 +702,52 @@ const App = () => {
             >
               <h3 className="text-xl font-semibold">Send us a message</h3>
               <form className="mt-6 grid gap-4 text-sm">
+                <label htmlFor="full-name" className="sr-only">
+                  Full name
+                </label>
                 <input
+                  id="full-name"
+                  name="fullName"
                   type="text"
                   placeholder="Full name"
-                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  autoComplete="name"
+                  required
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 />
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="email-address"
+                  name="email"
                   type="email"
                   placeholder="Email address"
-                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  autoComplete="email"
+                  required
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 />
+                <label htmlFor="preferred-branch" className="sr-only">
+                  Preferred branch
+                </label>
                 <input
+                  id="preferred-branch"
+                  name="preferredBranch"
                   type="text"
                   placeholder="Preferred branch"
-                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  autoComplete="organization"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 />
+                <label htmlFor="goals" className="sr-only">
+                  Tell us about your goals
+                </label>
                 <textarea
+                  id="goals"
+                  name="goals"
                   rows="4"
                   placeholder="Tell us about your goals"
-                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 />
-                <button className="rounded-full bg-brand-red px-6 py-3 font-semibold shadow-glow transition hover:bg-brand-red-dark">
+                <button className="rounded-full bg-brand-red px-6 py-3 font-semibold shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                   Request Callback
                 </button>
               </form>
@@ -708,14 +773,14 @@ const App = () => {
                 <div className="mt-4 space-y-3 text-sm">
                   <a
                     href={CONTACT.whatsapp}
-                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red"
+                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                   >
                     <span>Chat on WhatsApp</span>
                     <span className="text-brand-red">→</span>
                   </a>
                   <a
                     href={`mailto:${CONTACT.email}`}
-                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red"
+                    className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 transition hover:border-brand-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                   >
                     <span>Email us</span>
                     <span className="text-brand-red">→</span>
@@ -735,7 +800,11 @@ const App = () => {
           </div>
           <div className="flex flex-wrap gap-4">
             {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="transition hover:text-white">
+              <a
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
                 {link.label}
               </a>
             ))}
