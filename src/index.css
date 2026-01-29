@@ -4,12 +4,23 @@
 
 :root {
   color-scheme: dark;
+  --color-bg: #0b0b0f;
+  --color-surface: rgba(255, 255, 255, 0.06);
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-text: #f8fafc;
+  --color-muted: rgba(248, 250, 252, 0.68);
+  --color-accent: #e11d48;
+  --color-accent-soft: rgba(225, 29, 72, 0.2);
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --shadow-glow: 0 0 32px rgba(225, 29, 72, 0.3);
 }
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: #0b0b0f;
-  color: #f8fafc;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .skip-link {
@@ -39,6 +50,26 @@ body {
   @apply text-xs uppercase tracking-[0.3em] text-brand-red sm:text-sm sm:tracking-[0.35em];
 }
 
+.section-wrapper {
+  @apply mx-auto max-w-6xl px-6;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-brand-red px-6 py-3 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black;
+}
+
+.tag {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/70;
+}
+
 .glass {
   @apply bg-white/5 border border-white/10 backdrop-blur-lg;
 }
@@ -50,9 +81,9 @@ body {
 .card-elevated {
   position: relative;
   overflow: hidden;
-  border-radius: 1.5rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--color-border);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
@@ -69,6 +100,14 @@ body {
   @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70;
 }
 
+.chip-strong {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/80;
+}
+
+.icon-pill {
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-lg;
+}
+
 .gradient-divider {
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(239, 68, 68, 0.6), rgba(255, 255, 255, 0));
@@ -80,6 +119,19 @@ body {
 
 .progress-fill {
   @apply block h-full rounded-full bg-gradient-to-r from-brand-red to-rose-200 shadow-glow;
+}
+
+.surface-panel {
+  @apply rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.35)];
+}
+
+.list-check li {
+  @apply flex items-start gap-2;
+}
+
+.list-check li::before {
+  content: "✓";
+  @apply text-brand-red;
 }
 
 .hero-orb {

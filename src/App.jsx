@@ -9,9 +9,11 @@ import {
   NAV_LINKS,
   PRICING,
   PROGRAMS,
+  RESULTS,
   STATS,
   TESTIMONIALS,
   TRAINERS,
+  TRUST_BADGES,
 } from './data';
 
 const fadeUp = {
@@ -71,7 +73,7 @@ const StatCard = ({ stat }) => (
     whileHover={{ translateY: -6 }}
   >
     <div className="flex items-center gap-3 text-brand-red">
-      <span className="text-2xl">{iconMap[stat.icon] ?? '💪'}</span>
+      <span className="icon-pill">{iconMap[stat.icon] ?? '💪'}</span>
       <h3 className="text-lg font-semibold">{stat.title}</h3>
     </div>
     <p className="mt-3 text-sm text-white/70">{stat.description}</p>
@@ -100,7 +102,7 @@ const App = () => {
         Skip to content
       </a>
       <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
-        <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 sm:flex-nowrap">
+        <nav className="section-wrapper flex flex-wrap items-center justify-between gap-4 py-4 sm:flex-nowrap">
           <div className="flex min-w-0 items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-lg font-bold">A</span>
             <div>
@@ -122,9 +124,9 @@ const App = () => {
           <div className="flex items-center gap-3">
             <a
               href={CONTACT.whatsapp}
-              className="rounded-full bg-brand-red px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-5"
+              className="btn-primary px-5 py-2 text-xs sm:text-sm"
             >
-              Join Now
+              Book Trial
             </a>
             <button
               type="button"
@@ -173,25 +175,34 @@ const App = () => {
       <main id="main-content">
         <section id="home" className="relative overflow-hidden">
           <div className="absolute inset-0">
-            <img
-              src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt="Gym hero"
-              className="h-full w-full object-cover"
-              fetchPriority="high"
-              decoding="async"
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcSet="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&fm=webp&w=800 800w, https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&fm=webp&w=1400 1400w, https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&fm=webp&w=1800 1800w"
+                sizes="(min-width: 1024px) 60vw, 100vw"
+              />
+              <img
+                src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt="Gym hero"
+                className="h-full w-full object-cover"
+                fetchPriority="high"
+                decoding="async"
+                sizes="(min-width: 1024px) 60vw, 100vw"
+                srcSet="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800 800w, https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1400 1400w, https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1800 1800w"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-black/30" />
             <div className="hero-orb hero-orb-left" aria-hidden="true" />
             <div className="hero-orb hero-orb-right" aria-hidden="true" />
           </div>
-          <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 py-20 md:flex-row md:items-center md:py-28">
+          <div className="relative section-wrapper flex flex-col gap-12 py-20 md:flex-row md:items-center md:py-28">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="max-w-xl space-y-6"
             >
-              <span className="chip">Mumbai&apos;s Boldest Gym Experience</span>
+              <span className="chip-strong">Mumbai&apos;s Boldest Gym Experience</span>
               <h1 className="font-display text-4xl font-semibold leading-tight md:text-6xl">
                 Build Strength. <span className="text-brand-red">Own Your Story.</span>
               </h1>
@@ -202,26 +213,24 @@ const App = () => {
               <div className="flex flex-wrap gap-4">
                 <a
                   href="#pricing"
-                  className="w-full rounded-full bg-brand-red px-6 py-3 text-center text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:w-auto"
+                  className="btn-primary w-full text-center sm:w-auto"
                 >
                   View Memberships
                 </a>
                 <a
                   href="#programs"
-                  className="w-full rounded-full border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:w-auto"
+                  className="btn-secondary w-full text-center sm:w-auto"
                 >
                   Explore Programs
                 </a>
               </div>
-              <div className="card-elevated grid gap-4 p-5 text-sm text-white/70 sm:grid-cols-2">
-                <div>
-                  <p className="text-2xl font-semibold text-white">6+</p>
-                  <p>Branches across Mumbai</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-semibold text-white">1500+</p>
-                  <p>Active members</p>
-                </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {TRUST_BADGES.map((badge) => (
+                  <div key={badge.id} className="glass-strong rounded-2xl p-4 text-sm text-white/70">
+                    <p className="font-semibold text-white">{badge.title}</p>
+                    <p className="mt-2 text-xs text-white/60">{badge.description}</p>
+                  </div>
+                ))}
               </div>
             </motion.div>
             <motion.div
@@ -255,7 +264,17 @@ const App = () => {
         </section>
         <div className="gradient-divider" aria-hidden="true" />
 
-        <section className="mx-auto max-w-6xl px-6 py-16">
+        <section className="section-wrapper py-16">
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="Why us"
+              title="A performance-first approach to fitness"
+              description="Purpose-built programs, measurable milestones, and a supportive community that keeps you accountable."
+            />
+            <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em] text-white/50">
+              <span className="chip">Safe • Clean • Certified</span>
+            </div>
+          </div>
           <div className="grid gap-6 md:grid-cols-4">
             {STATS.map((stat) => (
               <StatCard key={stat.title} stat={stat} />
@@ -264,7 +283,7 @@ const App = () => {
         </section>
 
         <section className="bg-black/50 py-16">
-          <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="section-wrapper grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -297,13 +316,22 @@ const App = () => {
               viewport={{ once: true, amount: 0.3 }}
               className="relative overflow-hidden rounded-3xl border border-white/10"
             >
-              <img
-                src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Trainer tracking progress"
-                className="h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&fm=webp&w=600 600w, https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&fm=webp&w=1000 1000w"
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                />
+                <img
+                  src="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  alt="Trainer tracking progress"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  srcSet="https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=600 600w, https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1000 1000w"
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 space-y-2">
                 <p className="text-xs uppercase tracking-[0.3em] text-white/60">Progress snapshots</p>
@@ -315,8 +343,31 @@ const App = () => {
             </motion.div>
           </div>
         </section>
+        <section className="section-wrapper py-16">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div className="space-y-6">
+              <SectionHeading
+                eyebrow="Results"
+                title="Measurable outcomes, not just workouts"
+                description="We combine data-driven programming with accountability check-ins so members see tangible results."
+              />
+              <a href="#contact" className="btn-secondary">
+                Book a free assessment
+              </a>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {RESULTS.map((result) => (
+                <div key={result.id} className="surface-panel space-y-3 text-sm">
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">{result.label}</p>
+                  <p className="text-3xl font-semibold text-white">{result.value}</p>
+                  <p className="text-white/60">{result.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <section id="experience" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section id="experience" className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Experience"
             title="Immerse yourself in the Adiyash energy"
@@ -336,7 +387,7 @@ const App = () => {
                 loop
                 muted
                 playsInline
-                preload="none"
+                preload="metadata"
                 poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600"
               >
                 <source
@@ -386,7 +437,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="programs" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section id="programs" className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Programs"
             title="Training built for every fitness goal"
@@ -404,13 +455,22 @@ const App = () => {
                 className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/60 hover:shadow-[0_20px_50px_rgba(239,68,68,0.15)]"
               >
                 <div className="relative h-48">
-                  <img
-                    src={program.image}
-                    alt={program.title}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${program.image}&fm=webp&w=400 400w, ${program.image}&fm=webp&w=600 600w`}
+                      sizes="(min-width: 1024px) 20vw, (min-width: 768px) 40vw, 90vw"
+                    />
+                    <img
+                      src={program.image}
+                      alt={program.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(min-width: 1024px) 20vw, (min-width: 768px) 40vw, 90vw"
+                      srcSet={`${program.image}&w=400 400w, ${program.image}&w=600 600w`}
+                    />
+                  </picture>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
                   <span className="absolute left-4 top-4 rounded-full bg-brand-red/90 px-3 py-1 text-xs font-semibold">
                     {program.title}
@@ -422,7 +482,10 @@ const App = () => {
                     <h3 className="text-xl font-semibold">{program.title}</h3>
                   </div>
                   <p className="text-sm text-white/70">{program.description}</p>
-                  <button className="text-sm font-semibold text-brand-red transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                  <button
+                    type="button"
+                    className="text-sm font-semibold text-brand-red transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
                     Learn more →
                   </button>
                 </div>
@@ -432,7 +495,7 @@ const App = () => {
         </section>
 
         <section id="schedule" className="bg-black/50 py-16">
-          <div className="mx-auto max-w-6xl space-y-10 px-6">
+          <div className="section-wrapper space-y-10">
             <SectionHeading
               eyebrow="Schedule"
               title="Weekly rhythm for relentless progress"
@@ -464,7 +527,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="gallery" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section id="gallery" className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Gallery"
             title="A look inside our training zones"
@@ -481,20 +544,29 @@ const App = () => {
                 transition={{ delay: index * 0.04 }}
                 className="overflow-hidden rounded-2xl border border-white/10 transition hover:-translate-y-1 hover:border-brand-red/50"
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="h-48 w-full object-cover transition duration-500 hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={`${image.src}&fm=webp&w=400 400w, ${image.src}&fm=webp&w=700 700w`}
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 45vw, 90vw"
+                  />
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="h-48 w-full object-cover transition duration-500 hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 45vw, 90vw"
+                    srcSet={`${image.src}&w=400 400w, ${image.src}&w=700 700w`}
+                  />
+                </picture>
               </motion.div>
             ))}
           </div>
         </section>
 
         <section id="trainers" className="bg-black/50 py-16">
-          <div className="mx-auto max-w-6xl space-y-10 px-6">
+          <div className="section-wrapper space-y-10">
             <SectionHeading
               eyebrow="Trainers"
               title="Coach-led guidance at every step"
@@ -509,33 +581,45 @@ const App = () => {
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.05 }}
-                  className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/50"
-                >
-                  <div className="relative h-56">
+                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/50"
+              >
+                <div className="relative h-56">
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${trainer.image}&fm=webp&w=400 400w, ${trainer.image}&fm=webp&w=600 600w`}
+                      sizes="(min-width: 1024px) 20vw, (min-width: 768px) 45vw, 90vw"
+                    />
                     <img
                       src={trainer.image}
                       alt={trainer.name}
                       className="h-full w-full object-cover"
                       loading="lazy"
                       decoding="async"
+                      sizes="(min-width: 1024px) 20vw, (min-width: 768px) 45vw, 90vw"
+                      srcSet={`${trainer.image}&w=400 400w, ${trainer.image}&w=600 600w`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  </div>
-                  <div className="space-y-2 p-5">
-                    <h3 className="text-lg font-semibold">{trainer.name}</h3>
-                    <p className="text-sm text-brand-red">{trainer.specialty}</p>
-                    <p className="text-sm text-white/60">{trainer.experience} experience</p>
-                    <button className="text-sm font-semibold text-white/70 transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-                      Book session →
-                    </button>
-                  </div>
+                  </picture>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                </div>
+                <div className="space-y-2 p-5">
+                  <h3 className="text-lg font-semibold">{trainer.name}</h3>
+                  <p className="text-sm text-brand-red">{trainer.specialty}</p>
+                  <p className="text-sm text-white/60">{trainer.experience} experience</p>
+                  <button
+                    type="button"
+                    className="text-sm font-semibold text-white/70 transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
+                    Book session →
+                  </button>
+                </div>
                 </motion.article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Testimonials"
             title="Members who chose strength"
@@ -553,13 +637,20 @@ const App = () => {
                 className="glass-strong rounded-3xl p-6"
               >
                 <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="h-12 w-12 rounded-full border border-white/20 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${testimonial.image}&fm=webp&w=80 80w, ${testimonial.image}&fm=webp&w=120 120w`}
+                    />
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="h-12 w-12 rounded-full border border-white/20 object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      srcSet={`${testimonial.image}&w=80 80w, ${testimonial.image}&w=120 120w`}
+                    />
+                  </picture>
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
                     <p className="text-xs text-white/60">{testimonial.duration}</p>
@@ -582,7 +673,7 @@ const App = () => {
         </section>
 
         <section id="pricing" className="bg-black/50 py-16">
-          <div className="mx-auto max-w-6xl space-y-10 px-6">
+          <div className="section-wrapper space-y-10">
             <SectionHeading
               eyebrow="Pricing"
               title="Memberships crafted for your ambition"
@@ -618,15 +709,15 @@ const App = () => {
                     <span className="text-3xl font-semibold">₹{plan.price}</span>
                     <span className="text-sm text-white/60">{plan.period}</span>
                   </div>
-                  <ul className="mt-6 space-y-3 text-sm text-white/70">
+                  <ul className="list-check mt-6 space-y-3 text-sm text-white/70">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2">
-                        <span className="text-brand-red">●</span>
-                        <span>{feature}</span>
-                      </li>
+                      <li key={feature}>{feature}</li>
                     ))}
                   </ul>
-                  <button className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                  <button
+                    type="button"
+                    className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
                     Start {plan.tier}
                   </button>
                 </motion.article>
@@ -635,7 +726,7 @@ const App = () => {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Locations"
             title="Find the branch closest to you"
@@ -661,7 +752,7 @@ const App = () => {
         </section>
 
         <section className="bg-black/50 py-16">
-          <div className="mx-auto max-w-6xl space-y-10 px-6">
+          <div className="section-wrapper space-y-10">
             <SectionHeading
               eyebrow="FAQ"
               title="Everything you need to know"
@@ -678,7 +769,9 @@ const App = () => {
                   transition={{ delay: index * 0.03 }}
                   className="glass-strong rounded-2xl p-6"
                 >
-                  <summary className="cursor-pointer text-sm font-semibold">{faq.question}</summary>
+                  <summary className="cursor-pointer text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                    {faq.question}
+                  </summary>
                   <p className="mt-3 text-sm text-white/70">{faq.answer}</p>
                 </motion.details>
               ))}
@@ -686,7 +779,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="contact" className="mx-auto max-w-6xl space-y-10 px-6 py-16">
+        <section id="contact" className="section-wrapper space-y-10 py-16">
           <SectionHeading
             eyebrow="Contact"
             title="Ready to start? Let&apos;s talk"
@@ -747,7 +840,10 @@ const App = () => {
                   placeholder="Tell us about your goals"
                   className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 />
-                <button className="rounded-full bg-brand-red px-6 py-3 font-semibold shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                <button
+                  type="submit"
+                  className="rounded-full bg-brand-red px-6 py-3 font-semibold shadow-glow transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
                   Request Callback
                 </button>
               </form>
@@ -793,7 +889,7 @@ const App = () => {
       </main>
 
       <footer className="border-t border-white/10 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+        <div className="section-wrapper flex flex-col gap-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="font-display text-lg font-semibold text-white">Adiyash Gym</p>
             <p className="mt-2">High-performance training with a bold mindset.</p>

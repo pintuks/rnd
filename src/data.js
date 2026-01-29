@@ -37,6 +37,45 @@ export const STATS = [
   },
 ];
 
+export const TRUST_BADGES = [
+  {
+    id: 1,
+    title: '4.9/5 member rating',
+    description: 'From 1,200+ active members',
+  },
+  {
+    id: 2,
+    title: 'Certified trainers',
+    description: 'ACE, NASM & ISSA backed',
+  },
+  {
+    id: 3,
+    title: 'Hygiene-first zones',
+    description: 'Sanitized every 90 minutes',
+  },
+];
+
+export const RESULTS = [
+  {
+    id: 1,
+    label: 'Average body fat reduction',
+    value: '12%',
+    note: 'Within 16 weeks of coached training.',
+  },
+  {
+    id: 2,
+    label: 'Strength PR improvements',
+    value: '2.4x',
+    note: 'Measured across compound lifts.',
+  },
+  {
+    id: 3,
+    label: 'Members hitting goals',
+    value: '92%',
+    note: 'Consistent check-ins + nutrition plans.',
+  },
+];
+
 export const PROGRAMS = [
   {
     id: 1,
