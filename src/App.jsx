@@ -445,14 +445,16 @@ const App = () => {
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {PROGRAMS.map((program, index) => (
-              <motion.article
+              <motion.a
                 key={program.id}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.05 }}
-                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/60 hover:shadow-[0_20px_50px_rgba(239,68,68,0.15)]"
+                href={CONTACT.whatsapp}
+                aria-label={`Learn more about ${program.title}`}
+                className="group block cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/60 hover:shadow-[0_20px_50px_rgba(239,68,68,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <div className="relative h-48">
                   <picture>
@@ -471,7 +473,7 @@ const App = () => {
                       srcSet={`${program.image}&w=400 400w, ${program.image}&w=600 600w`}
                     />
                   </picture>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
                   <span className="absolute left-4 top-4 rounded-full bg-brand-red/90 px-3 py-1 text-xs font-semibold">
                     {program.title}
                   </span>
@@ -482,14 +484,11 @@ const App = () => {
                     <h3 className="text-xl font-semibold">{program.title}</h3>
                   </div>
                   <p className="text-sm text-white/70">{program.description}</p>
-                  <button
-                    type="button"
-                    className="text-sm font-semibold text-brand-red transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                  >
+                  <span className="text-sm font-semibold text-brand-red transition group-hover:text-white">
                     Learn more →
-                  </button>
+                  </span>
                 </div>
-              </motion.article>
+              </motion.a>
             ))}
           </div>
         </section>
@@ -574,15 +573,17 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {TRAINERS.map((trainer, index) => (
-                <motion.article
+                <motion.a
                   key={trainer.id}
                   variants={fadeUp}
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.05 }}
-                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/50"
-              >
+                  href={CONTACT.whatsapp}
+                  aria-label={`Book a session with ${trainer.name}`}
+                  className="group block cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-brand-red/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
                 <div className="relative h-56">
                   <picture>
                     <source
@@ -600,20 +601,17 @@ const App = () => {
                       srcSet={`${trainer.image}&w=400 400w, ${trainer.image}&w=600 600w`}
                     />
                   </picture>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 </div>
                 <div className="space-y-2 p-5">
                   <h3 className="text-lg font-semibold">{trainer.name}</h3>
                   <p className="text-sm text-brand-red">{trainer.specialty}</p>
                   <p className="text-sm text-white/60">{trainer.experience} experience</p>
-                  <button
-                    type="button"
-                    className="text-sm font-semibold text-white/70 transition group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                  >
+                  <span className="text-sm font-semibold text-white/70 transition group-hover:text-white">
                     Book session →
-                  </button>
+                  </span>
                 </div>
-                </motion.article>
+                </motion.a>
               ))}
             </div>
           </div>
@@ -681,14 +679,16 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-3">
               {PRICING.map((plan, index) => (
-                <motion.article
+                <motion.a
                   key={plan.id}
                   variants={fadeUp}
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`relative rounded-3xl border p-6 transition hover:-translate-y-1 ${
+                  href={CONTACT.whatsapp}
+                  aria-label={`Start ${plan.tier} membership`}
+                  className={`group block cursor-pointer relative rounded-3xl border p-6 transition hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
                     plan.popular
                       ? 'border-brand-red bg-white/10 shadow-glow'
                       : 'border-white/10 bg-white/5'
@@ -714,13 +714,10 @@ const App = () => {
                       <li key={feature}>{feature}</li>
                     ))}
                   </ul>
-                  <button
-                    type="button"
-                    className="mt-6 w-full rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-red-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                  >
+                  <span className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition group-hover:bg-brand-red-dark">
                     Start {plan.tier}
-                  </button>
-                </motion.article>
+                  </span>
+                </motion.a>
               ))}
             </div>
           </div>
