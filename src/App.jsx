@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import {
   BRANCHES,
   CONTACT,
@@ -15,7 +15,6 @@ import {
   TRAINERS,
   TRUST_BADGES,
 } from './data';
-import * as knowledgeSource from './data';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -95,7 +94,24 @@ const ChatWidget = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const apiKey = import.meta.env.VITE_FASTROUTER_API_KEY;
 
-  const knowledgeBase = useMemo(() => JSON.stringify(knowledgeSource, null, 2), []);
+  const knowledgeBase = useMemo(
+    () =>
+      JSON.stringify(
+        {
+          contact: CONTACT,
+          contactInfo: CONTACT_INFO,
+          branches: BRANCHES,
+          programs: PROGRAMS,
+          pricing: PRICING,
+          faq: FAQ_DATA,
+          trainers: TRAINERS,
+          schedule,
+        },
+        null,
+        2,
+      ),
+    [],
+  );
   const formatMessage = (content) => {
     const lines = content.split(/\r?\n/);
     const blocks = [];
@@ -341,7 +357,7 @@ ${knowledgeBase}`;
 };
 
 const StatCard = ({ stat }) => (
-  <motion.div
+  <m.div
     variants={fadeUp}
     className="card-elevated p-6"
     whileHover={{ translateY: -6 }}
@@ -351,7 +367,7 @@ const StatCard = ({ stat }) => (
       <h3 className="text-lg font-semibold">{stat.title}</h3>
     </div>
     <p className="mt-3 text-sm text-white/70">{stat.description}</p>
-  </motion.div>
+  </m.div>
 );
 
 const ProgressBar = ({ metric }) => (
@@ -371,80 +387,81 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-brand-black text-white">
-      <a href="#main-content" className="skip-link">
-        Skip to content
-      </a>
-      <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
-        <nav className="section-wrapper flex flex-wrap items-center justify-between gap-4 py-4 sm:flex-nowrap">
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-lg font-bold">A</span>
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Adiyash</p>
-              <p className="font-display text-lg font-semibold">Gym & Wellness</p>
+    <LazyMotion features={domAnimation}>
+      <div className="bg-brand-black text-white">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
+        <header className="sticky top-0 z-50 bg-black/70 backdrop-blur-md">
+          <nav className="section-wrapper flex flex-wrap items-center justify-between gap-4 py-4 sm:flex-nowrap">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-lg font-bold">A</span>
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-white/60">Adiyash</p>
+                <p className="font-display text-lg font-semibold">Gym & Wellness</p>
+              </div>
             </div>
-          </div>
-          <div className="hidden items-center gap-6 text-sm text-white/70 md:flex">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-            <a
-              href={CONTACT.whatsapp}
-              className="btn-primary px-5 py-2 text-xs sm:text-sm"
-            >
-              Book Trial
-            </a>
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen((prev) => !prev)}
-              aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-menu"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black md:hidden"
-            >
-              <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
-            </button>
-          </div>
-        </nav>
-        {isMenuOpen ? (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-t border-white/10 bg-black/90 md:hidden"
-            id="mobile-menu"
-          >
-            <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 text-sm">
+            <div className="hidden items-center gap-6 text-sm text-white/70 md:flex">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-white/70 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   {link.label}
                 </a>
               ))}
+            </div>
+            <div className="flex items-center gap-3">
               <a
                 href={CONTACT.whatsapp}
-                onClick={() => setIsMenuOpen(false)}
-                className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="btn-primary px-5 py-2 text-xs sm:text-sm"
               >
-                <span>Chat on WhatsApp</span>
-                <span className="text-brand-red">→</span>
+                Book Trial
               </a>
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 p-2 text-white/70 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black md:hidden"
+              >
+                <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
+              </button>
             </div>
-          </motion.div>
-        ) : null}
-      </header>
+          </nav>
+          {isMenuOpen ? (
+            <m.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="border-t border-white/10 bg-black/90 md:hidden"
+              id="mobile-menu"
+            >
+              <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 text-sm">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white/70 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <a
+                  href={CONTACT.whatsapp}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-white/80 transition hover:border-brand-red hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
+                  <span>Chat on WhatsApp</span>
+                  <span className="text-brand-red">→</span>
+                </a>
+              </div>
+            </m.div>
+          ) : null}
+        </header>
 
       <main id="main-content">
         <section id="home" className="relative overflow-hidden">
@@ -470,7 +487,7 @@ const App = () => {
             <div className="hero-orb hero-orb-right" aria-hidden="true" />
           </div>
           <div className="relative section-wrapper flex flex-col gap-12 py-20 md:flex-row md:items-center md:py-28">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -506,8 +523,8 @@ const App = () => {
                   </div>
                 ))}
               </div>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -533,7 +550,7 @@ const App = () => {
               >
                 WhatsApp Us
               </a>
-            </motion.div>
+            </m.div>
           </div>
         </section>
         <div className="gradient-divider" aria-hidden="true" />
@@ -558,7 +575,7 @@ const App = () => {
 
         <section className="bg-black/50 py-16">
           <div className="section-wrapper grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <motion.div
+            <m.div
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -582,8 +599,8 @@ const App = () => {
                   </span>
                 ))}
               </div>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -614,7 +631,7 @@ const App = () => {
                   Body metrics, lifting PRs, and recovery scores all updated inside your member dashboard.
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </section>
         <section className="section-wrapper py-16">
@@ -648,7 +665,7 @@ const App = () => {
             description="A cinematic preview of our premium training floors, recovery lounges, and high-intensity zones."
           />
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-            <motion.div
+            <m.div
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -678,7 +695,7 @@ const App = () => {
                 <p className="text-sm uppercase tracking-[0.3em] text-white/60">60-second reel</p>
                 <h3 className="font-display text-2xl font-semibold">Feel the momentum</h3>
               </div>
-            </motion.div>
+            </m.div>
             <div className="grid gap-4">
               {[
                 {
@@ -694,7 +711,7 @@ const App = () => {
                   description: 'Guided sessions with performance analytics and custom milestones.',
                 },
               ].map((item, index) => (
-                <motion.div
+                <m.div
                   key={item.title}
                   variants={fadeUp}
                   initial="hidden"
@@ -705,7 +722,7 @@ const App = () => {
                 >
                   <h4 className="text-lg font-semibold">{item.title}</h4>
                   <p className="mt-2 text-sm text-white/70">{item.description}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
@@ -719,7 +736,7 @@ const App = () => {
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {PROGRAMS.map((program, index) => (
-              <motion.a
+              <m.a
                 key={program.id}
                 variants={fadeUp}
                 initial="hidden"
@@ -762,7 +779,7 @@ const App = () => {
                     Learn more →
                   </span>
                 </div>
-              </motion.a>
+              </m.a>
             ))}
           </div>
         </section>
@@ -776,7 +793,7 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-3">
               {schedule.map((day) => (
-                <motion.div
+                <m.div
                   key={day.day}
                   variants={fadeUp}
                   initial="hidden"
@@ -794,7 +811,7 @@ const App = () => {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
@@ -808,7 +825,7 @@ const App = () => {
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY_IMAGES.map((image, index) => (
-              <motion.div
+              <m.div
                 key={image.id}
                 variants={fadeUp}
                 initial="hidden"
@@ -833,7 +850,7 @@ const App = () => {
                     srcSet={getGallerySrcSet(image.src, { useWebp: false })}
                   />
                 </picture>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>
@@ -847,7 +864,7 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {TRAINERS.map((trainer, index) => (
-                <motion.a
+                <m.a
                   key={trainer.id}
                   variants={fadeUp}
                   initial="hidden"
@@ -885,7 +902,7 @@ const App = () => {
                     Book session →
                   </span>
                 </div>
-                </motion.a>
+                </m.a>
               ))}
             </div>
           </div>
@@ -899,7 +916,7 @@ const App = () => {
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((testimonial, index) => (
-              <motion.div
+              <m.div
                 key={testimonial.id}
                 variants={fadeUp}
                 initial="hidden"
@@ -939,7 +956,7 @@ const App = () => {
                   ))}
                 </div>
                 <p className="mt-4 text-sm text-white/70">{testimonial.review}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>
@@ -953,7 +970,7 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-3">
               {PRICING.map((plan, index) => (
-                <motion.a
+                <m.a
                   key={plan.id}
                   variants={fadeUp}
                   initial="hidden"
@@ -991,7 +1008,7 @@ const App = () => {
                   <span className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-brand-red px-4 py-3 text-sm font-semibold text-white transition group-hover:bg-brand-red-dark">
                     Start {plan.tier}
                   </span>
-                </motion.a>
+                </m.a>
               ))}
             </div>
           </div>
@@ -1005,7 +1022,7 @@ const App = () => {
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {BRANCHES.map((branch, index) => (
-              <motion.div
+              <m.div
                 key={branch.id}
                 variants={fadeUp}
                 initial="hidden"
@@ -1017,7 +1034,7 @@ const App = () => {
                 <h3 className="text-lg font-semibold">{branch.name}</h3>
                 <p className="mt-2 text-sm text-white/70">{branch.area}</p>
                 <p className="mt-4 text-sm font-semibold text-brand-red">{branch.phone}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>
@@ -1031,7 +1048,7 @@ const App = () => {
             />
             <div className="grid gap-6 md:grid-cols-2">
               {FAQ_DATA.map((faq, index) => (
-                <motion.details
+                <m.details
                   key={faq.id}
                   variants={fadeUp}
                   initial="hidden"
@@ -1044,7 +1061,7 @@ const App = () => {
                     {faq.question}
                   </summary>
                   <p className="mt-3 text-sm text-white/70">{faq.answer}</p>
-                </motion.details>
+                </m.details>
               ))}
             </div>
           </div>
@@ -1057,7 +1074,7 @@ const App = () => {
             description="Reach out to our team and reserve your first session today."
           />
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <motion.div
+            <m.div
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -1118,8 +1135,8 @@ const App = () => {
                   Request Callback
                 </button>
               </form>
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
@@ -1154,7 +1171,7 @@ const App = () => {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </section>
       </main>
@@ -1182,6 +1199,7 @@ const App = () => {
 
       <ChatWidget />
     </div>
+    </LazyMotion>
   );
 };
 
