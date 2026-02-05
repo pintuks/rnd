@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   BRANCHES,
@@ -15,6 +15,7 @@ import {
   TRAINERS,
   TRUST_BADGES,
 } from './data';
+import * as knowledgeSource from './data';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -65,6 +66,177 @@ const SectionHeading = ({ eyebrow, title, description }) => (
     {description ? <p className="text-white/70">{description}</p> : null}
   </div>
 );
+
+const ChatWidget = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content:
+        "Hi! I'm the Adiyash Gym assistant. Ask me about memberships, programs, schedules, locations, or contact details.",
+    },
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const apiKey = import.meta.env.VITE_FASTROUTER_API_KEY;
+
+  const knowledgeBase = useMemo(() => JSON.stringify(knowledgeSource, null, 2), []);
+
+  const systemPrompt = `You are an AI chat assistant for Adiyash Gym. Answer ONLY using the information in the knowledge base below.
+If the answer is not present in the knowledge base, say: "I can only answer based on the info available. Please ask about memberships, programs, schedules, locations, or contact details."
+
+Knowledge base:
+${knowledgeBase}`;
+
+  const handleSend = async () => {
+    const trimmed = input.trim();
+    if (!trimmed || isLoading) {
+      return;
+    }
+
+    setMessages((prev) => [...prev, { role: 'user', content: trimmed }]);
+    setInput('');
+    setIsLoading(true);
+    setErrorMessage('');
+
+    if (!apiKey) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content:
+            'The chat service is not configured. Please add VITE_FASTROUTER_API_KEY to your environment.',
+        },
+      ]);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('https://go.fastrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'anthropic/claude-sonnet-4-20250514',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: trimmed },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to reach the chat service. Please try again.');
+      }
+
+      const data = await response.json();
+      const reply = data?.choices?.[0]?.message?.content?.trim();
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: reply || 'I can only answer based on the info available. Please ask about memberships or programs.',
+        },
+      ]);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+      setErrorMessage(message);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content:
+            'I ran into a problem connecting to the chat service. Please try again in a moment.',
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-4">
+      {isOpen ? (
+        <div className="w-[min(360px,90vw)] overflow-hidden rounded-3xl border border-white/10 bg-black/90 shadow-[0_20px_60px_rgba(0,0,0,0.4)] backdrop-blur">
+          <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+            <div>
+              <p className="text-sm font-semibold">AI Gym Assistant</p>
+              <p className="text-xs text-white/50">Answers based on Adiyash Gym info</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="rounded-full border border-white/10 px-2 py-1 text-xs text-white/70 transition hover:border-brand-red hover:text-white"
+            >
+              Close
+            </button>
+          </div>
+          <div className="flex max-h-80 flex-col gap-4 overflow-y-auto px-5 py-4 text-sm">
+            {messages.map((message, index) => (
+              <div
+                key={`${message.role}-${index}`}
+                className={`rounded-2xl px-4 py-3 ${
+                  message.role === 'user'
+                    ? 'self-end bg-brand-red text-white'
+                    : 'self-start border border-white/10 bg-white/5 text-white/80'
+                }`}
+              >
+                {message.content}
+              </div>
+            ))}
+            {isLoading ? (
+              <div className="self-start rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/70">
+                Typing…
+              </div>
+            ) : null}
+          </div>
+          <div className="border-t border-white/10 px-5 py-4">
+            <label className="sr-only" htmlFor="chat-input">
+              Ask a question
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                id="chat-input"
+                type="text"
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleSend();
+                  }
+                }}
+                placeholder="Ask about memberships, schedules..."
+                className="flex-1 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-sm text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red"
+              />
+              <button
+                type="button"
+                onClick={handleSend}
+                disabled={isLoading}
+                className="rounded-full bg-brand-red px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-red-dark disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                Send
+              </button>
+            </div>
+            {errorMessage ? <p className="mt-2 text-xs text-red-400">{errorMessage}</p> : null}
+          </div>
+        </div>
+      ) : null}
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex items-center gap-2 rounded-full bg-brand-red px-4 py-3 text-sm font-semibold shadow-glow transition hover:bg-brand-red-dark"
+      >
+        <span className="text-lg">💬</span>
+        {isOpen ? 'Hide chat' : 'Ask AI'}
+      </button>
+    </div>
+  );
+};
 
 const StatCard = ({ stat }) => (
   <motion.div
@@ -905,6 +1077,8 @@ const App = () => {
           <p>© 2025 Adiyash Gym. All rights reserved.</p>
         </div>
       </footer>
+
+      <ChatWidget />
     </div>
   );
 };
