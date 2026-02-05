@@ -82,6 +82,88 @@ const ChatWidget = () => {
   const apiKey = import.meta.env.VITE_FASTROUTER_API_KEY;
 
   const knowledgeBase = useMemo(() => JSON.stringify(knowledgeSource, null, 2), []);
+  const formatMessage = (content) => {
+    const lines = content.split(/\r?\n/);
+    const blocks = [];
+    let listItems = [];
+    let key = 0;
+
+    const renderInline = (text) => {
+      const parts = [];
+      let remaining = text;
+      const pattern = /(\*\*[^*]+\*\*|\*[^*]+\*)/;
+
+      while (remaining) {
+        const match = remaining.match(pattern);
+        if (!match) {
+          parts.push(remaining);
+          break;
+        }
+
+        const [token] = match;
+        const index = match.index ?? 0;
+
+        if (index > 0) {
+          parts.push(remaining.slice(0, index));
+        }
+
+        if (token.startsWith('**')) {
+          parts.push(
+            <strong key={`strong-${key++}`}>{token.slice(2, -2)}</strong>,
+          );
+        } else {
+          parts.push(<em key={`em-${key++}`}>{token.slice(1, -1)}</em>);
+        }
+
+        remaining = remaining.slice(index + token.length);
+      }
+
+      return parts;
+    };
+
+    const flushList = () => {
+      if (listItems.length) {
+        blocks.push(
+          <ul key={`list-${key++}`}>
+            {listItems.map((item, index) => (
+              <li key={`li-${key++}-${index}`}>{item}</li>
+            ))}
+          </ul>,
+        );
+        listItems = [];
+      }
+    };
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        flushList();
+        return;
+      }
+
+      const headingMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
+      if (headingMatch) {
+        flushList();
+        blocks.push(
+          <h3 key={`heading-${key++}`}>{renderInline(headingMatch[2])}</h3>,
+        );
+        return;
+      }
+
+      const listMatch = trimmed.match(/^[-*]\s+(.*)$/);
+      if (listMatch) {
+        listItems.push(renderInline(listMatch[1]));
+        return;
+      }
+
+      flushList();
+      blocks.push(<p key={`text-${key++}`}>{renderInline(trimmed)}</p>);
+    });
+
+    flushList();
+
+    return blocks;
+  };
 
   const systemPrompt = `You are an AI chat assistant for Adiyash Gym. Answer ONLY using the information in the knowledge base below.
 If the answer is not present in the knowledge base, say: "I can only answer based on the info available. Please ask about memberships, programs, schedules, locations, or contact details."
@@ -186,7 +268,13 @@ ${knowledgeBase}`;
                     : 'self-start border border-white/10 bg-white/5 text-white/80'
                 }`}
               >
-                {message.content}
+                {message.role === 'assistant' ? (
+                  <div className="chat-message">
+                    {formatMessage(message.content)}
+                  </div>
+                ) : (
+                  message.content
+                )}
               </div>
             ))}
             {isLoading ? (

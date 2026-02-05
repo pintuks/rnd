@@ -198,3 +198,45 @@ body {
     animation-duration: 0.01ms !important;
   }
 }
+
+.chat-message {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.chat-message :first-child {
+  margin-top: 0;
+}
+
+.chat-message p {
+  margin-top: 0.4rem;
+}
+
+.chat-message h1,
+.chat-message h2,
+.chat-message h3 {
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.chat-message ul,
+.chat-message ol {
+  margin: 0.5rem 0 0.5rem 1.25rem;
+  list-style: disc;
+}
+
+.chat-message ol {
+  list-style: decimal;
+}
+
+.chat-message li {
+  margin-top: 0.25rem;
+}
+
+.chat-message strong {
+  font-weight: 600;
+}
+
+.chat-message em {
+  font-style: italic;
+}
