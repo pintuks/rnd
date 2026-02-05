@@ -15,7 +15,6 @@ import {
   TRAINERS,
   TRUST_BADGES,
 } from './data';
-import * as knowledgeSource from './data';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -95,7 +94,24 @@ const ChatWidget = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const apiKey = import.meta.env.VITE_FASTROUTER_API_KEY;
 
-  const knowledgeBase = useMemo(() => JSON.stringify(knowledgeSource, null, 2), []);
+  const knowledgeBase = useMemo(
+    () =>
+      JSON.stringify(
+        {
+          contact: CONTACT,
+          contactInfo: CONTACT_INFO,
+          branches: BRANCHES,
+          programs: PROGRAMS,
+          pricing: PRICING,
+          faq: FAQ_DATA,
+          trainers: TRAINERS,
+          schedule,
+        },
+        null,
+        2,
+      ),
+    [],
+  );
   const formatMessage = (content) => {
     const lines = content.split(/\r?\n/);
     const blocks = [];
