@@ -34,6 +34,20 @@ const iconMap = {
   Users: '🤝',
 };
 
+const getGallerySrcSet = (src, { useWebp }) => {
+  if (src.startsWith('data:')) {
+    return src;
+  }
+
+  if (src.startsWith('/')) {
+    return `${src} 400w, ${src} 700w`;
+  }
+
+  return useWebp
+    ? `${src}&fm=webp&w=400 400w, ${src}&fm=webp&w=700 700w`
+    : `${src}&w=400 400w, ${src}&w=700 700w`;
+};
+
 const schedule = [
   {
     day: 'Monday',
@@ -806,7 +820,7 @@ const App = () => {
                 <picture>
                   <source
                     type="image/webp"
-                    srcSet={`${image.src}&fm=webp&w=400 400w, ${image.src}&fm=webp&w=700 700w`}
+                    srcSet={getGallerySrcSet(image.src, { useWebp: true })}
                     sizes="(min-width: 1024px) 20vw, (min-width: 640px) 45vw, 90vw"
                   />
                   <img
@@ -816,7 +830,7 @@ const App = () => {
                     loading="lazy"
                     decoding="async"
                     sizes="(min-width: 1024px) 20vw, (min-width: 640px) 45vw, 90vw"
-                    srcSet={`${image.src}&w=400 400w, ${image.src}&w=700 700w`}
+                    srcSet={getGallerySrcSet(image.src, { useWebp: false })}
                   />
                 </picture>
               </motion.div>
